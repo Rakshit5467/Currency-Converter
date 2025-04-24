@@ -60,7 +60,6 @@ window.addEventListener('load', () => {
   });
   
   function showNotifyPrompt() {
-    // 2) Create a temporary banner
     const prompt = document.createElement('div');
     prompt.id = 'notifyPrompt';
     prompt.innerHTML = `
@@ -79,15 +78,12 @@ window.addEventListener('load', () => {
     `;
     document.body.appendChild(prompt);
   
-    // 3) Wire up the buttons
     document.getElementById('notifyAllow').addEventListener('click', async () => {
-      // ask permission, then remove the prompt
       const permission = await Notification.requestPermission();
       console.log('Notification permission:', permission);
       prompt.remove();
     });
     document.getElementById('notifyDismiss').addEventListener('click', () => {
-      // just remove, no future prompts this session
       prompt.remove();
     });
   }
