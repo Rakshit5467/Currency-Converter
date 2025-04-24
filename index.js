@@ -52,3 +52,42 @@ document.querySelector(".icon").addEventListener("click", () => {
     loadFlag(toSelect);
     getExchangeRate();
 });
+
+window.addEventListener('load', () => {
+    if ('Notification' in window && Notification.permission === 'default') {
+      showNotifyPrompt();
+    }
+  });
+  
+  function showNotifyPrompt() {
+    // 2) Create a temporary banner
+    const prompt = document.createElement('div');
+    prompt.id = 'notifyPrompt';
+    prompt.innerHTML = `
+      <div class="install-container" style="display:block;">
+        <div class="install-banner">
+          <div class="install-content">
+            <i class="bi bi-bell-fill"></i>
+            <p>Enable notifications to get rate updates</p>
+          </div>
+          <div class="install-buttons">
+            <button id="notifyDismiss" class="btn btn-sm btn-outline-light">No thanks</button>
+            <button id="notifyAllow" class="btn btn-sm btn-light">Allow</button>
+          </div>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(prompt);
+  
+    // 3) Wire up the buttons
+    document.getElementById('notifyAllow').addEventListener('click', async () => {
+      // ask permission, then remove the prompt
+      const permission = await Notification.requestPermission();
+      console.log('Notification permission:', permission);
+      prompt.remove();
+    });
+    document.getElementById('notifyDismiss').addEventListener('click', () => {
+      // just remove, no future prompts this session
+      prompt.remove();
+    });
+  }
