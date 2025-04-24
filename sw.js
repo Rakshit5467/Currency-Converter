@@ -121,7 +121,6 @@ self.addEventListener('activate', event => {
 self.addEventListener('push', event => {
   console.log('[Service Worker] Push Received.');
 
-  // If you pushed a JSON payload, parse it; otherwise fall back to a default message:
   let data = { title: 'Currency Converter', body: 'Here’s your simple notification!' };
   if (event.data) {
     try {
